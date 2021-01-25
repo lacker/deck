@@ -28,6 +28,7 @@
   "dependencies": {
     "libp2p": "^0.30.2",
     "libp2p-noise": "^2.0.1",
+    "libp2p-tcp": "^0.15.2",
     "libp2p-websockets": "^0.15.0"
   }
 }
