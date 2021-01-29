@@ -1,12 +1,13 @@
 let Libp2p = require("libp2p");
+let Bootstrap = require("libp2p-bootstrap");
 let WebSockets = require("libp2p-websockets");
 let { NOISE } = require("libp2p-noise");
-let MPLEX = require("libp2p-mplex");
-
-let Bootstrap = require("libp2p-bootstrap");
+let MulticastDNS = require("libp2p-mdns");
+let Mplex = require("libp2p-mplex");
+let TCP = require("libp2p-tcp");
 
 // Known peer addresses
-let bootstrapMultiaddrs = [
+let BOOTSTRAP_ADDRS = [
   "/ip4/104.131.131.82/tcp/4001/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
   "/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN",
   "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
@@ -17,18 +18,25 @@ let bootstrapMultiaddrs = [
 
 async function main() {
   let node = await Libp2p.create({
+    addresses: {
+      listen: ["/ip4/0.0.0.0/tcp/0"]
+    },
     modules: {
-      transport: [WebSockets],
+      transport: [TCP, WebSockets],
       connEncryption: [NOISE],
-      streamMuxer: [MPLEX],
-      peerDiscovery: [Bootstrap]
+      streamMuxer: [Mplex],
+      peerDiscovery: [Bootstrap, MulticastDNS]
     },
     config: {
       peerDiscovery: {
         autoDial: true,
         [Bootstrap.tag]: {
           enabled: true,
-          list: bootstrapMultiaddrs
+          list: BOOTSTRAP_ADDRS
+        },
+        mdns: {
+          interval: 20e3,
+          enabled: true
         }
       }
     }
