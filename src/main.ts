@@ -35,12 +35,11 @@ async function main() {
   });
 
   node.on("peer:discovery", (peerId: any) => {
-    console.log("Discovered %s", peerId.toB58String()); // Log discovered peer
+    console.log("Discovered %s", peerId.toB58String());
   });
 
   node.connectionManager.on("peer:connect", (connection: any) => {
-    console.log("XXX");
-    console.log("Connected to %s", connection.remotePeer.toB58String()); // Log connected peer
+    console.log("Connected to %s", connection.remotePeer.toB58String());
   });
 
   // start libp2p
