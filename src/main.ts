@@ -8,8 +8,17 @@ let MulticastDNS = require("libp2p-mdns");
 let Mplex = require("libp2p-mplex");
 let TCP = require("libp2p-tcp");
 let WebSockets = require("libp2p-websockets");
+let multihashing = require("multihashing-async");
 let bytesFromString = require("uint8arrays/from-string");
 let stringFromBytes = require("uint8arrays/to-string");
+
+async function makeCID(str: string) {
+  let bytes = new TextEncoder("utf8").encode("deck:" + str);
+  let hash = await multihashing(bytes, "sha2-256");
+  let cid = new CID(1, "dag-pb", hash);
+  CID.validateCID(cid);
+  return cid;
+}
 
 // Known peer addresses
 let BOOTSTRAP_ADDRS = [
