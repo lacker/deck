@@ -30,11 +30,6 @@ let BOOTSTRAP_ADDRS = [
   "/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt"
 ];
 
-// Normally in libp2p the CID is the hash for some content, but we just want to use it
-// to find other users of our application.
-let cid = new CID("QmaCoordinationToken11111111111111111111111111");
-CID.validateCID(cid);
-
 async function main() {
   let node = await Libp2p.create({
     addresses: {
