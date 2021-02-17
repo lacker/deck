@@ -5,6 +5,8 @@ import (
 	"fmt"
 
 	"github.com/libp2p/go-libp2p"
+
+	dht "github.com/libp2p/go-libp2p-kad-dht"
 )
 
 func main() {
@@ -16,6 +18,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Println("not really using:", dht.DefaultBootstrapPeers)
 
 	// print the node's listening addresses
 	fmt.Println("Listening on addresses:", node.Addrs())
