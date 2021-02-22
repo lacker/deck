@@ -9,6 +9,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 
 	dht "github.com/libp2p/go-libp2p-kad-dht"
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
 )
 
 func main() {
@@ -53,6 +54,21 @@ func main() {
 		}()
 	}
 	wg.Wait()
+
+	// Subscribe to pingnet pubsub
+	// TODO: print out pings
+	// TODO: send pings
+	ps, err := pubsub.NewGossipSub(ctx, host)
+	if err != nil {
+		panic(err)
+	}
+	topic, err := ps.Join("pingnet")
+	sub, err := topic.Subscribe()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("sub:", sub)
 
 	// shut the node down
 	if err := host.Close(); err != nil {
