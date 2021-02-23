@@ -12,6 +12,16 @@ import (
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 )
 
+func listen(ctx context.Context, sub *pubsub.Subscription) {
+	for {
+		msg, err := sub.Next(ctx)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("got data:", msg.Data)
+	}
+}
+
 func main() {
 	// create a background context (i.e. one that never cancels)
 	ctx := context.Background()
