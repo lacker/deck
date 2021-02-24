@@ -79,9 +79,10 @@ func main() {
 	}
 
 	fmt.Println("sub:", sub)
+	listen(ctx, sub)
 
 	// shut the node down
-	if err := host.Close(); err != nil {
-		panic(err)
-	}
+	// if err := host.Close(); err != nil {
+	//	panic(err)
+	//}
 }
