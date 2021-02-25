@@ -80,6 +80,7 @@ async function main() {
   await node.pubsub.subscribe(topic);
   setInterval(() => {
     let text = `node ${node.peerId} says hello at ${new Date()}`;
+    console.log(`sending to pingnet: ${text}`);
     node.pubsub.publish(topic, bytesFromString(text));
   }, 3000);
 }
