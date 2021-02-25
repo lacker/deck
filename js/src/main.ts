@@ -13,7 +13,7 @@ let bytesFromString = require("uint8arrays/from-string");
 let stringFromBytes = require("uint8arrays/to-string");
 
 async function makeCID(str: string) {
-  let bytes = new TextEncoder("utf8").encode("deck:" + str);
+  let bytes = new TextEncoder().encode("deck:" + str);
   let hash = await multihashing(bytes, "sha2-256");
   let cid = new CID(1, "dag-pb", hash);
   CID.validateCID(cid);
