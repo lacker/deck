@@ -67,7 +67,6 @@ func main() {
 	wg.Wait()
 
 	// Subscribe to pingnet pubsub
-	// TODO: send pings
 	ps, err := pubsub.NewGossipSub(ctx, host)
 	if err != nil {
 		panic(err)
