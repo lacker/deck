@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -66,7 +67,6 @@ func main() {
 	wg.Wait()
 
 	// Subscribe to pingnet pubsub
-	// TODO: print out pings
 	// TODO: send pings
 	ps, err := pubsub.NewGossipSub(ctx, host)
 	if err != nil {
@@ -79,7 +79,13 @@ func main() {
 	}
 
 	fmt.Println("sub:", sub)
-	listen(ctx, sub)
+	go listen(ctx, sub)
+
+	for {
+		time.Sleep(3 * time.Second)
+		text := fmt.Sprintf("go node says hi at %s", time.Now())
+		topic.Publish(ctx, []byte(text))
+	}
 
 	// shut the node down
 	// if err := host.Close(); err != nil {
