@@ -19,7 +19,7 @@ func listen(ctx context.Context, sub *pubsub.Subscription) {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println("got data:", msg.Data)
+		fmt.Println("got data:", string(msg.Data))
 	}
 }
 
