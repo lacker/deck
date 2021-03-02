@@ -45,7 +45,7 @@ async function main() {
     },
     config: {
       peerDiscovery: {
-        autoDial: false,
+        autoDial: true,
         [Bootstrap.tag]: {
           enabled: true,
           list: BOOTSTRAP_ADDRS

@@ -33,10 +33,8 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println("not really using:", dht.DefaultBootstrapPeers)
-
 	// print the node's listening addresses
-	fmt.Println("Listening on addresses:", host.Addrs())
+	fmt.Println("Listening on:", host.Addrs())
 
 	// Start a DHT
 	kad, err := dht.New(ctx, host)
