@@ -31,6 +31,12 @@ let BOOTSTRAP_ADDRS = [
 ];
 
 async function main() {
+  let useMDNS = false;
+  let peerDiscovery = [Bootstrap];
+  if (useMDNS) {
+    peerDiscovery.push(MulticastDNS);
+  }
+
   let node = await Libp2p.create({
     addresses: {
       listen: ["/ip4/0.0.0.0/tcp/0"]
@@ -39,7 +45,7 @@ async function main() {
       transport: [TCP, WebSockets],
       connEncryption: [NOISE],
       streamMuxer: [Mplex],
-      peerDiscovery: [Bootstrap, MulticastDNS],
+      peerDiscovery,
       dht: KadDHT,
       pubsub: GossipSub
     },
