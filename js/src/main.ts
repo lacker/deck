@@ -31,7 +31,7 @@ let BOOTSTRAP_ADDRS = [
 ];
 
 async function main() {
-  let useMDNS = false;
+  let useMDNS = true;
   let peerDiscovery = [Bootstrap];
   if (useMDNS) {
     peerDiscovery.push(MulticastDNS);
@@ -51,7 +51,7 @@ async function main() {
     },
     config: {
       peerDiscovery: {
-        autoDial: true,
+        autoDial: false,
         [Bootstrap.tag]: {
           enabled: true,
           list: BOOTSTRAP_ADDRS
