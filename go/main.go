@@ -7,7 +7,9 @@ import (
 	"time"
 
 	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p/p2p/discovery"
 
 	dht "github.com/libp2p/go-libp2p-kad-dht"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
@@ -21,6 +23,14 @@ func listen(ctx context.Context, sub *pubsub.Subscription) {
 		}
 		fmt.Println("got data:", string(msg.Data))
 	}
+}
+
+type discoveryNotifee struct {
+	h host.Host
+}
+
+func (n *discoveryNotifee) HandlePeerFound(pi peer.AddrInfo) {
+	panic("TODO")
 }
 
 func main() {
@@ -69,6 +79,15 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	// Set up local mdns discovery
+	disc, err := discovery.NewMdnsService(ctx, host, time.Hour, "discovery-service-tag")
+	if err != nil {
+		panic(err)
+	}
+	n := discoveryNotifee{h: host}
+	disc.RegisterNotifee(&n)
+
 	topic, err := ps.Join("pingnet")
 	sub, err := topic.Subscribe()
 	if err != nil {
