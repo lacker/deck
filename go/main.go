@@ -46,9 +46,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
-	// print the node's listening addresses
-	fmt.Println("Listening on:", host.Addrs())
+	fmt.Println("running node:", host.ID())
 
 	// Start a DHT
 	kad, err := dht.New(ctx, host)
