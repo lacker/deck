@@ -101,7 +101,7 @@ func main() {
 
 	for {
 		time.Sleep(3 * time.Second)
-		text := fmt.Sprintf("go node says hi at %s", time.Now())
+		text := fmt.Sprintf("%s says hi at %s", host.ID(), time.Now())
 		topic.Publish(ctx, []byte(text))
 	}
 
